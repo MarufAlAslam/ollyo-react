@@ -104,6 +104,12 @@ const Main = () => {
         })
         setImages(newData)
     }
+
+    // delete selected images
+    const handleDelete = () => {
+        const newData = images.filter(item => item.isMarked === false)
+        setImages(newData)
+    }
     return (
         <main>
             <div className="wrapper bg-gray-50 w-full">
@@ -116,7 +122,7 @@ const Main = () => {
                         }
                         
                         {
-                            countSelected > 0 && <button className="text-red-500 rounded-md">Delete Files</button>
+                            countSelected > 0 && <button onClick={handleDelete} className="text-red-500 rounded-md">Delete Files</button>
                         }
                     </div>
                     <div className="line w-full h-[1px] bg-gray-200 mt-4"></div>
@@ -126,7 +132,7 @@ const Main = () => {
                         ))}
 
                         <input type="file" name="file" id="file" className="hidden" />
-                        <label htmlFor="file" className="col-span-1 row-span-1 border rounded-md cursor-pointer">
+                        <label htmlFor="file" className="col-span-1 row-span-1 border rounded-md cursor-pointer min-h-[175px]">
                             <div className="flex flex-col gap-3 justify-center items-center h-full">
                                 <BiImageAdd className='text-2xl' />
                                 <span>Add Images</span>
