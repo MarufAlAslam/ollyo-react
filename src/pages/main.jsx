@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react'
 
 // import icons
-import {BiImageAdd} from "react-icons/bi"
+import { BiImageAdd } from "react-icons/bi"
+import { FaCheckSquare } from "react-icons/fa"
 
 // import images
 import img1 from "../assets/images/image-1.webp"
@@ -19,6 +20,7 @@ import img11 from "../assets/images/image-11.jpeg"
 import ImageCard from '../components/image-card'
 
 const Main = () => {
+    // default image data
     const data = [
         {
             id: 1,
@@ -77,13 +79,22 @@ const Main = () => {
         },
     ]
 
+    // states
     const [images, setImages] = useState(data)
+    const [countSelected, setCountSelected] = useState(0)
 
+    // set image data
     useEffect(() => {
         setImages(data)
     }, [])
 
+    useEffect(() => {
+        setCountSelected(images.filter(item => item.isMarked === true).length)
+    }
+        , [images])
 
+
+    // check uncheck funtion
     const handleCheck = (id) => {
         const newData = images.map(item => {
             if (item.id === id) {
@@ -97,7 +108,19 @@ const Main = () => {
         <main>
             <div className="wrapper bg-gray-50 w-full">
                 <div className="grid-container bg-white p-5 rounded-md">
-                    <div className="grid grid-cols-5 gap-4 p-8">
+                    <div className="flex justify-between items-center">
+                        {
+                            countSelected > 0 ? <h1 className="text-xl font-semibold flex items-center gap-2">
+                                <FaCheckSquare className='text-blue-600'/>
+                                {countSelected} Files Selected</h1> : <h1 className="text-xl font-semibold">Gallery</h1>
+                        }
+                        
+                        {
+                            countSelected > 0 && <button className="text-red-500 rounded-md">Delete Files</button>
+                        }
+                    </div>
+                    <div className="line w-full h-[1px] bg-gray-200 mt-4"></div>
+                    <div className="grid grid-cols-5 gap-4 py-4">
                         {images.map((item, index) => (
                             <ImageCard key={index} index={index} imgData={item} handleCheck={handleCheck} />
                         ))}
@@ -105,7 +128,7 @@ const Main = () => {
                         <input type="file" name="file" id="file" className="hidden" />
                         <label htmlFor="file" className="col-span-1 row-span-1 border rounded-md cursor-pointer">
                             <div className="flex flex-col gap-3 justify-center items-center h-full">
-                                <BiImageAdd className='text-2xl'/>
+                                <BiImageAdd className='text-2xl' />
                                 <span>Add Images</span>
                             </div>
                         </label>
