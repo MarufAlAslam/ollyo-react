@@ -120,9 +120,11 @@ const Main = () => {
                     [dragIndex, 1],
                     [hoverIndex, 0, prevCards[dragIndex]],
                 ],
-            }),
+            }
+            ),
         )
     }, [])
+
 
     //   render
     const renderCard = useCallback((card, index) => {
