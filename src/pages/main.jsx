@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react'
 
 // import icons
 import {BiImageAdd} from "react-icons/bi"
@@ -6,7 +7,7 @@ import {BiImageAdd} from "react-icons/bi"
 // import images
 import img1 from "../assets/images/image-1.webp"
 import img2 from "../assets/images/image-2.webp"
-import img3 from "../assets/images/image-2.webp"
+import img3 from "../assets/images/image-3.webp"
 import img4 from "../assets/images/image-4.webp"
 import img5 from "../assets/images/image-5.webp"
 import img6 from "../assets/images/image-6.webp"
@@ -21,56 +22,84 @@ const Main = () => {
     const data = [
         {
             id: 1,
-            image: img1
+            image: img1,
+            isMarked: false
         },
         {
             id: 2,
-            image: img2
+            image: img2,
+            isMarked: false
         },
         {
             id: 3,
-            image: img3
+            image: img3,
+            isMarked: false
         },
         {
             id: 4,
-            image: img4
+            image: img4,
+            isMarked: false
         },
         {
             id: 5,
-            image: img5
+            image: img5,
+            isMarked: false
         },
         {
             id: 6,
-            image: img6
+            image: img6,
+            isMarked: false
         },
         {
             id: 7,
-            image: img7
+            image: img7,
+            isMarked: false
         },
         {
             id: 8,
-            image: img8
+            image: img8,
+            isMarked: false
         },
         {
             id: 9,
-            image: img9
+            image: img9,
+            isMarked: false
         },
         {
             id: 10,
-            image: img10
+            image: img10,
+            isMarked: false
         },
         {
             id: 11,
-            image: img11
+            image: img11,
+            isMarked: false
         },
     ]
+
+    const [images, setImages] = useState(data)
+
+    useEffect(() => {
+        setImages(data)
+    }, [])
+
+
+    const handleCheck = (id) => {
+        const newData = images.map(item => {
+            if (item.id === id) {
+                item.isMarked = !item.isMarked
+            }
+            return item
+        })
+        setImages(newData)
+    }
     return (
         <main>
             <div className="wrapper bg-gray-50 w-full">
                 <div className="grid-container bg-white p-5 rounded-md">
                     <div className="grid grid-cols-5 gap-4 p-8">
-                        {data.map((item, index) => (
-                            <ImageCard key={index} index={index} imgData={item} />
+                        {images.map((item, index) => (
+                            <ImageCard key={index} index={index} imgData={item} handleCheck={handleCheck} />
                         ))}
 
                         <input type="file" name="file" id="file" className="hidden" />
