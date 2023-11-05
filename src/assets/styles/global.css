@@ -1,0 +1,10 @@
+.wrapper{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.grid-container{
+    width: 1000px;
+    max-width: 98%;
+}
