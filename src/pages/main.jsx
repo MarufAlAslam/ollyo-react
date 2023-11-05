@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import update from 'immutability-helper'
 
 // import icons
 import { BiImageAdd } from "react-icons/bi"
@@ -110,6 +111,25 @@ const Main = () => {
         const newData = images.filter(item => item.isMarked === false)
         setImages(newData)
     }
+
+    // move 
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        setImages((prevCards) =>
+            update(prevCards, {
+                $splice: [
+                    [dragIndex, 1],
+                    [hoverIndex, 0, prevCards[dragIndex]],
+                ],
+            }),
+        )
+    }, [])
+
+    //   render
+    const renderCard = useCallback((card, index) => {
+        return (
+            <ImageCard key={card.id} id={card.id} index={index} imgData={card} handleCheck={handleCheck} moveCard={moveCard} />
+        )
+    }, [])
     return (
         <main>
             <div className="wrapper bg-gray-50 w-full">
@@ -117,10 +137,10 @@ const Main = () => {
                     <div className="flex justify-between items-center">
                         {
                             countSelected > 0 ? <h1 className="text-xl font-semibold flex items-center gap-2">
-                                <FaCheckSquare className='text-blue-600'/>
+                                <FaCheckSquare className='text-blue-600' />
                                 {countSelected} Files Selected</h1> : <h1 className="text-xl font-semibold">Gallery</h1>
                         }
-                        
+
                         {
                             countSelected > 0 && <button onClick={handleDelete} className="text-red-500 hover:underline rounded-md">Delete Files</button>
                         }
@@ -128,7 +148,7 @@ const Main = () => {
                     <div className="line w-full h-[1px] bg-gray-200 mt-4"></div>
                     <div className="grid grid-cols-5 gap-4 py-4">
                         {images.map((item, index) => (
-                            <ImageCard key={index} index={index} imgData={item} handleCheck={handleCheck} />
+                            renderCard(item, index)
                         ))}
 
                         <input type="file" name="file" id="file" className="hidden" />
