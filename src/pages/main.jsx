@@ -122,7 +122,7 @@ const Main = () => {
                         }
                         
                         {
-                            countSelected > 0 && <button onClick={handleDelete} className="text-red-500 rounded-md">Delete Files</button>
+                            countSelected > 0 && <button onClick={handleDelete} className="text-red-500 hover:underline rounded-md">Delete Files</button>
                         }
                     </div>
                     <div className="line w-full h-[1px] bg-gray-200 mt-4"></div>
