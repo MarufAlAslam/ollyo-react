@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // import icons
 import { BiImageAdd } from "react-icons/bi";
@@ -17,9 +17,9 @@ import img8 from "../assets/images/image-8.webp";
 import img9 from "../assets/images/image-9.webp";
 import img10 from "../assets/images/image-10.jpeg";
 import img11 from "../assets/images/image-11.jpeg";
-import ImageCard from "../components/image-card";
+import ImageCardMobile from "../components/image-card-mobile";
 
-const Main = () => {
+const MobileHome = () => {
   // default image data
   const data = [
     {
@@ -109,16 +109,6 @@ const Main = () => {
     setImages(newData);
   };
 
-  // move
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
-    setImages((prevCards) => {
-        const clonedCards = [...prevCards];
-        const removedCard = clonedCards.splice(dragIndex, 1)[0];
-        clonedCards.splice(hoverIndex, 0, removedCard);
-        return clonedCards;
-    })
-  }, []);
-
   return (
     <main>
       <div className="wrapper bg-gray-50 w-full">
@@ -145,9 +135,15 @@ const Main = () => {
           <div className="line w-full h-[1px] bg-gray-200 mt-4"></div>
           <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-4 py-4">
             {/* {images.map((item, index) => renderCard(item, index))} */}
-            {
-                React.Children.toArray(images.map((item, index) => <ImageCard key={item.id} id={item.id} index={index} imgData={item} handleCheck={handleCheck} moveCard={moveCard} />))
-            }
+            {images.map((item, index) => (
+              <ImageCardMobile
+                key={item.id}
+                id={item.id}
+                imgData={item}
+                index={index}
+                handleCheck={handleCheck}
+              />
+            ))}
 
             <input type="file" name="file" id="file" className="hidden" />
             <label
@@ -166,4 +162,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MobileHome;
